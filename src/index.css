@@ -1,0 +1,21 @@
+:root {
+  --clr-main-bg: #232323;
+  --clr-main-font: #bfbfbf;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --clr-main-bg: #bfbfbf;
+    --clr-main-font: #232323;
+  }
+}
