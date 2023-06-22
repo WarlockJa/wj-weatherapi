@@ -1,0 +1,25 @@
+.weatherCard__graph {
+  position: relative;
+  height: 6em;
+  margin: 0.2em 0;
+
+  display: flex;
+
+  overflow: hidden;
+
+  .svgGraph {
+    position: absolute;
+    height: 100%;
+
+    transition: transform 300ms linear;
+
+    polyline {
+      fill: var(--clr-graph-fill);
+      stroke: var(--clr-graph-stroke);
+    }
+
+    text {
+      fill: var(--clr-main-font);
+    }
+  }
+}

@@ -1,5 +1,5 @@
 interface IWeatherAPI_Hour {
-  time_epoch: number; // 1687122000
+  [time_epoch: string]: number; // 1687122000
   time: string; // "2023-06-19 00:00"
   temp_c: number;
   temp_f: number;

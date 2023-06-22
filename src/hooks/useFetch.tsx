@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface IWeatherAPI_LocalData {
   data: IWeatherAPI_Data;
   timestamp: number;
+  url: string;
 }
 
 export default function useFetch(url: string) {
@@ -21,7 +22,9 @@ export default function useFetch(url: string) {
     if (
       !weatherapiLocalData ||
       !weatherapiLocalData.timestamp ||
-      weatherapiLocalData.timestamp + 6 * 60 * 60 * 1000 < Date.now()
+      !weatherapiLocalData.url ||
+      weatherapiLocalData.url !== url ||
+      weatherapiLocalData.timestamp + 6 * 60 * 1000 < Date.now()
     ) {
       console.log("fetching new weather data");
       fetch(url, {
@@ -35,7 +38,7 @@ export default function useFetch(url: string) {
           setData(result);
           localStorage.setItem(
             "wj_weatherapi",
-            JSON.stringify({ timestamp: Date.now(), data: result })
+            JSON.stringify({ timestamp: Date.now(), data: result, url })
           );
         })
         .catch((error) => setError(error))

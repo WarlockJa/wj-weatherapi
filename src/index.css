@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300;500&display=swap");
+
 :root {
   --clr-main-bg: #232323;
   --clr-main-font: #bfbfbf;
+  --sz-dayCard-borderRadius: 10px;
+  --clr-dayCard-bg: #bfbfbf20;
+  --clr-graph-fill: rgba(255, 217, 0, 0.3);
+  --clr-graph-stroke: rgba(255, 217, 0, 1);
 }
 
 *,
@@ -11,11 +17,18 @@
 
 body {
   margin: 0;
+  font-family: "Prompt", sans-serif;
+}
+
+h1,
+p {
+  margin: 0;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --clr-main-bg: #bfbfbf;
     --clr-main-font: #232323;
+    --clr-dayCard-bg: #23232320;
   }
 }
