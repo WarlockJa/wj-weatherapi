@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./weathercard.scss";
 import { format } from "date-fns";
-import getAverageValue from "../utils/getAverageValue";
 import getGraphData from "../utils/getGraphData";
 import GraphSVG from "./GraphSVG";
 
