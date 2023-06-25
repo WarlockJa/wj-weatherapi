@@ -153,6 +153,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
         min={graphData.min}
         max={graphData.max}
         translateGraph={translateGraph}
+        activeHour={activeHour}
       />
 
       <div className="weatherCard__footer">{weatherCard__forecastDays}</div>

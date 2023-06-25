@@ -13,6 +13,7 @@ interface IGraphData {
   isCelcius: boolean;
   callback: (value: number) => void;
   translateGraph: number;
+  activeHour: number;
 }
 
 const STEP = 40; // space taken by an hour data on teh graph in px
@@ -51,9 +52,9 @@ const GraphSVG = (graphData: IGraphData) => {
         <React.Fragment key={hour.time}>
           {/* on graph temperature label */}
           <text
+            className={graphData.activeHour === index ? "activeHour" : ""}
             aria-label={ariaLabel}
             style={{ font: "bold 13px arial", textAnchor: "middle" }}
-            fill="currentColor"
             x={index * STEP}
             y={
               // calculating offset based on min/max graph data
@@ -71,7 +72,6 @@ const GraphSVG = (graphData: IGraphData) => {
           {/* under graph time label */}
           <text
             style={{ font: "bold 13px arial", textAnchor: "middle" }}
-            fill="currentColor"
             x={index * STEP}
             y={GRAPH_HEIGHT + UNDER_GRAPH_OFFSET}
             direction="ltr"

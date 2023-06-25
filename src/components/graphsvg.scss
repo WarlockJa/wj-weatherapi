@@ -21,5 +21,9 @@
     text {
       fill: var(--clr-main-font);
     }
+
+    .activeHour {
+      fill: var(--clr-font-highlight);
+    }
   }
 }
