@@ -1,0 +1,35 @@
+.weatherCard__footer {
+  display: flex;
+
+  .weatherCard__footer__item {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: var(--sz-dayCard-borderRadius);
+    border: transparent;
+    background-color: transparent;
+    color: var(--clr-main-font);
+
+    cursor: pointer;
+
+    .item--dotw {
+      line-height: 0;
+      padding-top: 0.5em;
+    }
+
+    .footer__item--avgTempWrapper {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 0;
+      padding-bottom: 0.5em;
+
+      span {
+        opacity: 0.5;
+      }
+    }
+  }
+  .weatherCard__footer__item--selected {
+    background-color: var(--clr-dayCard-bg);
+  }
+}

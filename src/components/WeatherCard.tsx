@@ -1,8 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./weathercard.scss";
-import { format } from "date-fns";
 import getGraphData from "../utils/getGraphData";
 import GraphSVG from "./GraphSVG";
+import WeatherCardHeader from "./WeatherCardHeader";
+import WeatherCardFooter from "./WeatherCardFooter";
+
+export interface IGraphData {
+  result: { time: string; value: number[] }[];
+  min: number;
+  max: number;
+}
+
+const getGraphDataField = (value: number, isCelcius: boolean) => {
+  switch (value) {
+    case 0:
+      return isCelcius ? ["temp_c"] : ["temp_f"];
+    case 1:
+      return isCelcius ? ["precip_mm"] : ["precip_in"];
+    case 2:
+      return ["humidity"];
+    case 3:
+      return ["uv"];
+    case 4:
+      return isCelcius
+        ? ["wind_kph", "wind_degree"]
+        : ["wind_mph", "wind_degree"];
+    default:
+      return ["temp_c"];
+  }
+};
+
+const graphSelectorButtons = [
+  "Temperature",
+  "Precipitation",
+  "Humidity",
+  "UV",
+  "Wind",
+];
 
 const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
   // switching between C and imperial units
@@ -11,152 +45,71 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
   const [activeHour, setActiveHour] = useState(0);
   // graph translateX value based on day card clicked
   const [translateGraph, setTranslateGraph] = useState(new Date().getHours());
-
-  const weatherCard__forecastDays = data.forecast.forecastday.map(
-    (day, index) => (
-      <button
-        key={day.date}
-        onClick={() => {
-          setActiveHour(index * 24);
-          setTranslateGraph(index === 0 ? new Date().getHours() : index * 24);
-        }}
-        className={
-          Math.floor(activeHour / 24) === index
-            ? "weatherCard__footer__item weatherCard__footer__item--selected"
-            : "weatherCard__footer__item"
-        }
-      >
-        <p className="item--dotw">{format(new Date(day.date), "eee")}</p>
-        <img
-          src={
-            index === 0
-              ? day.hour[new Date().getHours()].condition.icon
-              : day.day.condition.icon
-          }
-          alt={
-            index === 0
-              ? day.hour[new Date().getHours()].condition.text
-              : day.day.condition.text
-          }
-        />
-        <div className="footer__item--avgTempWrapper">
-          {isCelcius
-            ? `${Math.floor(day.day.maxtemp_c)}°`
-            : `${Math.floor(day.day.maxtemp_f)}°`}{" "}
-          <span>
-            {isCelcius
-              ? `${Math.floor(day.day.mintemp_c)}°`
-              : `${Math.floor(day.day.mintemp_f)}°`}
-          </span>
-        </div>
-      </button>
-    )
-  );
-
   // graph data
-  const graphData = getGraphData({
-    data: data.forecast.forecastday,
-    value: isCelcius ? "temp_c" : "temp_f",
-  });
+  const [graphData, setGraphData] = useState<IGraphData>();
+  const [graphType, setGraphType] = useState<number>(0);
+
+  useEffect(() => {
+    // graph data
+    setGraphData(() =>
+      getGraphData({
+        data: data.forecast.forecastday,
+        // value: isCelcius ? "temp_c" : "temp_f",
+        value: getGraphDataField(graphType, isCelcius),
+      })
+    );
+  }, [graphType, isCelcius]);
+
+  const graphSelectorContent = graphSelectorButtons.map((item, index) => (
+    <>
+      {index !== 0 && (
+        <div className="weatherCard__graphSelector--divider"></div>
+      )}
+      <button
+        key={item}
+        className={
+          graphType === index
+            ? "weatherCard__graphSelector--button weatherCard__graphSelector--buttonActive"
+            : "weatherCard__graphSelector--button"
+        }
+        onClick={() => setGraphType(index)}
+      >
+        {item}
+      </button>
+    </>
+  ));
 
   return (
     <div className="weatherCard">
-      <div className="weatherCard__header">
-        <div className="weatherCard__header__today">
-          <div className="today__temperatureWarpper">
-            <div className="today--iconWrapper">
-              <img src={data.current.condition.icon} alt="condition" />
-            </div>
-            <div className="today--temperature">
-              {isCelcius
-                ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                    activeHour % 24
-                  ].temp_c
-                : data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                    activeHour % 24
-                  ].temp_f}
-            </div>
-            <button
-              className="today__CeFaSwitch"
-              title="Celcius/Farenheit"
-              onClick={() => setIsCelcius(!isCelcius)}
-            >
-              <div className="today__CeFaSwitch--foreground today__CeFaSwitch--item">
-                {isCelcius ? "°C" : "°F"}
-              </div>
-              <div className="today__CeFaSwitch--background today__CeFaSwitch--item">
-                {isCelcius ? "°F" : "°C"}
-              </div>
-            </button>
-          </div>
-          <div className="today__additionalInfoWrapper">
-            <p>
-              Precipitation:{" "}
-              {isCelcius
-                ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                    activeHour % 24
-                  ].precip_mm
-                : data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                    activeHour % 24
-                  ].precip_in}
-              %
-            </p>
-            <p>
-              Humidity:{" "}
-              {
-                data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                  activeHour % 24
-                ].humidity
-              }
-              %
-            </p>
-            <p>
-              Wind:{" "}
-              {isCelcius
-                ? `${
-                    data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                      activeHour % 24
-                    ].wind_kph
-                  } km/h`
-                : `${
-                    data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                      activeHour % 24
-                    ].wind_mph
-                  } mph`}
-            </p>
-          </div>
-        </div>
-        <div className="weatherCard__header__date">
-          <h1 className="weatherCard__header__date--header">Weather</h1>
-          <p>
-            {format(
-              new Date(
-                data.forecast.forecastday[Math.floor(activeHour / 24)].date
-              ),
-              "eeee"
-            )}
-          </p>
-          <p>
-            {
-              data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                activeHour % 24
-              ].condition.text
-            }
-          </p>
-        </div>
-      </div>
-
-      <GraphSVG
-        isCelcius
-        callback={setActiveHour}
-        result={graphData.result}
-        min={graphData.min}
-        max={graphData.max}
-        translateGraph={translateGraph}
+      <WeatherCardHeader
         activeHour={activeHour}
+        isCelcius={isCelcius}
+        setIsCelcius={setIsCelcius}
+        data={data}
       />
 
-      <div className="weatherCard__footer">{weatherCard__forecastDays}</div>
+      <div className="weatherCard__graphSelector">{graphSelectorContent}</div>
+
+      {graphData && (
+        <GraphSVG
+          isCelcius
+          callback={setActiveHour}
+          result={graphData.result}
+          min={graphData.min}
+          max={graphData.max}
+          translateGraph={translateGraph}
+          activeHour={activeHour}
+          graphType={graphType}
+        />
+      )}
+
+      <WeatherCardFooter
+        activeHour={activeHour}
+        data={data}
+        isCelcius={isCelcius}
+        setActiveHour={setActiveHour}
+        setTranslateGraph={setTranslateGraph}
+      />
     </div>
   );
 };

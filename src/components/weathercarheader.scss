@@ -1,0 +1,80 @@
+@use "../media.scss";
+
+.weatherCard__header {
+  display: flex;
+  justify-content: space-between;
+
+  .weatherCard__header__today {
+    display: flex;
+    flex-wrap: wrap;
+
+    .today__temperatureWarpper {
+      display: flex;
+      margin-right: 1em;
+
+      .today--iconWrapper {
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+
+    .today--temperature {
+      font-size: 2.5rem;
+    }
+
+    .today__CeFaSwitch {
+      position: relative;
+      font-size: 1.6rem;
+      padding-left: 0.3em;
+      cursor: pointer;
+      height: 1.5em;
+      width: 1.2em;
+      background-color: transparent;
+      border: transparent;
+
+      .today__CeFaSwitch--item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: var(--clr-main-font);
+        transition: opacity 300ms ease;
+      }
+
+      .today__CeFaSwitch--background {
+        top: 0.2em;
+        left: 0.7em;
+        opacity: 0.1;
+      }
+    }
+    .today__CeFaSwitch:hover {
+      .today__CeFaSwitch--foreground {
+        opacity: 0.9;
+      }
+      .today__CeFaSwitch--background {
+        opacity: 0.6;
+      }
+    }
+
+    .today__additionalInfoWrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .weatherCard__header__date {
+    display: flex;
+    flex-direction: column;
+
+    .weatherCard__header__date--header {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+  }
+
+  @include media.max-width(small) {
+    .weatherCard__header__date {
+      display: none;
+    }
+  }
+}

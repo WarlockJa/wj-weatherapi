@@ -1,0 +1,17 @@
+// media mixins
+$breakpoint-small: 500px;
+$breakpoint-medium: 770px;
+
+@mixin max-width($breakpoint) {
+  @if ($breakpoint == small) {
+    @media (max-width: $breakpoint-small) {
+      @content;
+    }
+  } @else if ($breakpoint == medium) {
+    @media (max-width: $breakpoint-medium) {
+      @content;
+    }
+  } @else {
+    @error "UNKNOWN MEDIA BREAKPOINT #{$breakpoint}";
+  }
+}

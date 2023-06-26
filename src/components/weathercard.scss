@@ -1,113 +1,32 @@
+@use "../media.scss";
+
 .weatherCard {
   max-width: 734px;
   margin: 0 auto;
 
-  .weatherCard__header {
+  .weatherCard__graphSelector {
     display: flex;
-    justify-content: space-between;
+    margin: 0.5em 0;
 
-    .weatherCard__header__today {
-      display: flex;
-      flex-wrap: wrap;
-
-      .today__temperatureWarpper {
-        display: flex;
-        margin-right: 1em;
-
-        .today--iconWrapper {
-          img {
-            object-fit: contain;
-          }
-        }
-      }
-
-      .today--temperature {
-        font-size: 2.5rem;
-      }
-
-      .today__CeFaSwitch {
-        position: relative;
-        font-size: 1.6rem;
-        padding-left: 0.3em;
-        cursor: pointer;
-        height: 1.5em;
-        width: 1.2em;
-        background-color: transparent;
-        border: transparent;
-
-        .today__CeFaSwitch--item {
-          position: absolute;
-          top: 0;
-          left: 0;
-          color: var(--clr-main-font);
-          transition: opacity 300ms ease;
-        }
-
-        .today__CeFaSwitch--background {
-          top: 0.2em;
-          left: 0.7em;
-          opacity: 0.1;
-        }
-      }
-      .today__CeFaSwitch:hover {
-        .today__CeFaSwitch--foreground {
-          opacity: 0.9;
-        }
-        .today__CeFaSwitch--background {
-          opacity: 0.6;
-        }
-      }
-
-      .today__additionalInfoWrapper {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-
-    .weatherCard__header__date {
-      display: flex;
-      flex-direction: column;
-
-      .weatherCard__header__date--header {
-        font-size: 1.5rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  .weatherCard__footer {
-    display: flex;
-
-    .weatherCard__footer__item {
-      padding: 0.5em;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border-radius: var(--sz-dayCard-borderRadius);
-      border: transparent;
+    .weatherCard__graphSelector--button {
       background-color: transparent;
-      color: var(--clr-main-font);
-
+      border: transparent;
       cursor: pointer;
-
-      .item--dotw {
-        line-height: 0;
-        padding-top: 0.5em;
-      }
-
-      .footer__item--avgTempWrapper {
-        font-size: 0.9rem;
-        font-weight: 300;
-        line-height: 0;
-        padding-bottom: 0.5em;
-
-        span {
-          opacity: 0.5;
-        }
-      }
+      color: var(--clr-main-font);
+      font-size: 0.9rem;
+      padding: 0 0 0.3em 0;
+      border-bottom: 4px solid transparent;
     }
-    .weatherCard__footer__item--selected {
-      background-color: var(--clr-dayCard-bg);
+
+    .weatherCard__graphSelector--buttonActive {
+      border-bottom: 4px solid yellow;
+    }
+
+    .weatherCard__graphSelector--divider {
+      height: 1.1rem;
+      width: 1px;
+      background-color: var(--clr-graphSelector-divider-bg);
+      margin: 0 0.5em;
     }
   }
 }

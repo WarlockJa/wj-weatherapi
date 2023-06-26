@@ -2,18 +2,14 @@ import React from "react";
 import "./graphsvg.scss";
 import { format } from "date-fns";
 import getLineSegmentPercent from "../utils/getLineSegmentPercent";
+import { IGraphData } from "./WeatherCard";
 
-interface IGraphData {
-  result: {
-    time: string;
-    value: number;
-  }[];
-  min: number;
-  max: number;
+interface IGraphSVGData extends IGraphData {
   isCelcius: boolean;
   callback: (value: number) => void;
   translateGraph: number;
   activeHour: number;
+  graphType: number;
 }
 
 const STEP = 40; // space taken by an hour data on teh graph in px
@@ -21,7 +17,7 @@ const BLOCK_SIZE = 3; // number of hours in a merged display block (for better r
 const GRAPH_HEIGHT = 100; // height of the graph svg in px
 const UNDER_GRAPH_OFFSET = 20; // additional space for the labels under the graph
 
-const GraphSVG = (graphData: IGraphData) => {
+const GraphSVG = (graphData: IGraphSVGData) => {
   // graph width in px
   const graphWidth = (graphData.result.length - 1) * STEP;
   // generating points data for svg graph
@@ -30,7 +26,7 @@ const GraphSVG = (graphData: IGraphData) => {
       (result, item, index) =>
         result.concat(
           `\n${index * STEP},${getLineSegmentPercent({
-            x: item.value,
+            x: item.value[0],
             min: graphData.min,
             max: graphData.max,
           })}`
@@ -50,24 +46,53 @@ const GraphSVG = (graphData: IGraphData) => {
     if ((index + Math.ceil(BLOCK_SIZE / 2)) % BLOCK_SIZE === 0) {
       return (
         <React.Fragment key={hour.time}>
-          {/* on graph temperature label */}
+          {/* on graph label */}
           <text
             className={graphData.activeHour === index ? "activeHour" : ""}
             aria-label={ariaLabel}
             style={{ font: "bold 13px arial", textAnchor: "middle" }}
             x={index * STEP}
             y={
-              // calculating offset based on min/max graph data
-              getLineSegmentPercent({
-                x: hour.value,
-                min: graphData.min,
-                max: graphData.max,
-              }) - 6
+              graphData.graphType === 4
+                ? 12
+                : // calculating offset based on min/max graph data
+                  getLineSegmentPercent({
+                    x: hour.value[0],
+                    min: graphData.min,
+                    max: graphData.max,
+                  }) - 6
             }
             direction="ltr"
           >
-            {Math.floor(hour.value)}
+            {graphData.graphType === 4
+              ? graphData.isCelcius
+                ? `${Math.floor(hour.value[0])} km/h`
+                : `${Math.floor(hour.value[0])} mph`
+              : Math.floor(hour.value[0])}
           </text>
+
+          {/* wind arrow */}
+          {graphData.graphType === 4 && (
+            <g
+              className="arrowWrapper"
+              transform={`translate(${
+                index * STEP - (BLOCK_SIZE / 2) * STEP
+              }, 0)`}
+            >
+              <polyline
+                className="windArrow"
+                style={{ transform: `rotateZ(${hour.value[1]}deg)` }}
+                points={`
+                60,85
+                63,50
+                70,60
+                60,35
+                50,60
+                57,50
+                `}
+              />
+            </g>
+          )}
 
           {/* under graph time label */}
           <text
@@ -110,12 +135,21 @@ const GraphSVG = (graphData: IGraphData) => {
           }px)`,
         }}
       >
-        <polyline
-          fill="currentColor"
-          stroke="currentColor"
-          strokeWidth="2"
-          points={points}
-        />
+        {graphData.graphType !== 4 && (
+          <polyline
+            className={
+              graphData.graphType === 1
+                ? "polyline--precip"
+                : graphData.graphType === 2
+                ? "polyline--humidity"
+                : graphData.graphType === 4
+                ? "polyline--wind"
+                : ""
+            }
+            strokeWidth="2"
+            points={points}
+          />
+        )}
 
         {graphLabels}
       </svg>

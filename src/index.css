@@ -6,8 +6,16 @@
   --clr-font-highlight: white;
   --sz-dayCard-borderRadius: 10px;
   --clr-dayCard-bg: #bfbfbf20;
+  --clr-graphSelector-divider-bg: #fff4;
   --clr-graph-fill: rgba(255, 217, 0, 0.3);
   --clr-graph-stroke: rgba(255, 217, 0, 1);
+  --clr-graph-fill-precip: rgba(0, 140, 255, 0.3);
+  --clr-graph-stroke-precip: rgba(0, 140, 255, 1);
+  --clr-graph-fill-humid: rgba(0, 217, 255, 0.3);
+  --clr-graph-stroke-humid: rgba(0, 217, 255, 1);
+  --clr-graph-stroke-wind: rgb(0, 217, 255);
+  --clr-graph-fill-arrow: cadetblue;
+  --clr-graph-stroke-arrow: paleturquoise;
 }
 
 *,
