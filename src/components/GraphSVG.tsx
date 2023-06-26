@@ -12,7 +12,7 @@ interface IGraphSVGData extends IGraphData {
   graphType: number;
 }
 
-const STEP = 40; // space taken by an hour data on teh graph in px
+const STEP = 38; // space taken by an hour data on teh graph in px
 const BLOCK_SIZE = 3; // number of hours in a merged display block (for better results should be odd)
 const GRAPH_HEIGHT = 100; // height of the graph svg in px
 const UNDER_GRAPH_OFFSET = 20; // additional space for the labels under the graph
