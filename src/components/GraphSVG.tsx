@@ -21,9 +21,11 @@ const GraphSVG = (graphData: IGraphSVGData) => {
   // graph width in px
   const graphWidth = (graphData.result.length - 1) * STEP;
   // generating points data for svg graph
+  const baseGraphValue =
+    graphData.max < 0 ? 0 : graphData.min >= 0 ? GRAPH_HEIGHT : 50;
   const points = graphData.result
     .reduce(
-      (result, item, index) =>
+      (result: string, item, index) =>
         result.concat(
           `\n${index * STEP},${getLineSegmentPercent({
             x: item.value[0],
@@ -31,9 +33,9 @@ const GraphSVG = (graphData: IGraphSVGData) => {
             max: graphData.max,
           })}`
         ),
-      `00,${GRAPH_HEIGHT}`
+      `00,${baseGraphValue}`
     )
-    .concat(`\n${graphWidth},${GRAPH_HEIGHT}`);
+    .concat(`\n${graphWidth},${baseGraphValue}`);
 
   // aria-labels for graph temperature numbers
   const graphLabels = graphData.result.map((hour, index) => {
@@ -144,7 +146,11 @@ const GraphSVG = (graphData: IGraphSVGData) => {
                 ? "polyline--humidity"
                 : graphData.graphType === 4
                 ? "polyline--wind"
-                : ""
+                : baseGraphValue === 0
+                ? "polyline--cold"
+                : baseGraphValue === 50
+                ? "polyline--mixed"
+                : "polyline--warm"
             }
             strokeWidth="2"
             points={points}

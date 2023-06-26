@@ -20,6 +20,21 @@
       stroke: var(--clr-graph-stroke);
     }
 
+    .polyline--cold {
+      fill: var(--clr-graph-fill-cold);
+      stroke: var(--clr-graph-stroke-cold);
+    }
+
+    .polyline--warm {
+      fill: var(--clr-graph-fill-warm);
+      stroke: var(--clr-graph-stroke-warm);
+    }
+
+    .polyline--mixed {
+      fill: var(--clr-graph-fill-mixed);
+      stroke: var(--clr-graph-stroke-mixed);
+    }
+
     .polyline--precip {
       fill: var(--clr-graph-fill-precip);
       stroke: var(--clr-graph-stroke-precip);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./weathercard.scss";
 import getGraphData from "../utils/getGraphData";
 import GraphSVG from "./GraphSVG";
@@ -54,19 +54,17 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
     setGraphData(() =>
       getGraphData({
         data: data.forecast.forecastday,
-        // value: isCelcius ? "temp_c" : "temp_f",
         value: getGraphDataField(graphType, isCelcius),
       })
     );
   }, [graphType, isCelcius]);
 
   const graphSelectorContent = graphSelectorButtons.map((item, index) => (
-    <>
+    <React.Fragment key={item}>
       {index !== 0 && (
         <div className="weatherCard__graphSelector--divider"></div>
       )}
       <button
-        key={item}
         className={
           graphType === index
             ? "weatherCard__graphSelector--button weatherCard__graphSelector--buttonActive"
@@ -76,7 +74,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
       >
         {item}
       </button>
-    </>
+    </React.Fragment>
   ));
 
   return (

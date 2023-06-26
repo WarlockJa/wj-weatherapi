@@ -7,8 +7,14 @@
   --sz-dayCard-borderRadius: 10px;
   --clr-dayCard-bg: #bfbfbf20;
   --clr-graphSelector-divider-bg: #fff4;
-  --clr-graph-fill: rgba(255, 217, 0, 0.3);
-  --clr-graph-stroke: rgba(255, 217, 0, 1);
+
+  --clr-graph-fill-warm: rgba(255, 217, 0, 0.3);
+  --clr-graph-stroke-warm: rgba(255, 217, 0, 1);
+  --clr-graph-fill-cold: rgba(0, 183, 255, 0.3);
+  --clr-graph-stroke-cold: rgba(0, 183, 255, 1);
+  --clr-graph-fill-mixed: rgba(218, 246, 248, 0.3);
+  --clr-graph-stroke-mixed: rgba(218, 246, 248, 1);
+
   --clr-graph-fill-precip: rgba(0, 140, 255, 0.3);
   --clr-graph-stroke-precip: rgba(0, 140, 255, 1);
   --clr-graph-fill-humid: rgba(0, 217, 255, 0.3);
@@ -37,8 +43,9 @@ p {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --clr-main-bg: #bfbfbf;
-    --clr-main-font: #232323;
+    --clr-main-bg: #fff;
+    --clr-main-font: #5e5e5e;
     --clr-dayCard-bg: #23232320;
+    --clr-font-highlight: black;
   }
 }

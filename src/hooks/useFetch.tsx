@@ -8,7 +8,7 @@ interface IWeatherAPI_LocalData {
 
 export default function useFetch(url: string) {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<IWeatherAPI_Data | null>(null);
+  const [data, setData] = useState<IWeatherAPI_Data | null>();
   const [error, setError] = useState(null);
 
   useEffect(() => {
