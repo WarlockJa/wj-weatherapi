@@ -1,5 +1,8 @@
-main {
-  min-height: 100vh;
+#root {
   background-color: var(--clr-main-bg);
   color: var(--clr-main-font);
+}
+
+main {
+  min-height: 100vh;
 }

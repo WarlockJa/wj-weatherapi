@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import "./weathercarheader.scss";
+import "./weathercardheader.scss";
 
 interface IWeatherCardHeaderProps {
   data: IWeatherAPI_Data;
@@ -19,16 +19,49 @@ const WeatherCardHeader = ({
       <div className="weatherCard__header__today">
         <div className="today__temperatureWarpper">
           <div className="today--iconWrapper">
-            <img src={data.current.condition.icon} alt="condition" />
+            <img
+              src={
+                // if active hour is 0, which can happen only after clicking on the day icon
+                // show current hour data for the current day and average data for the forecast
+                // if not show data for the active hour
+                activeHour % 24 !== 0
+                  ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
+                      activeHour % 24
+                    ].condition.icon
+                  : Math.floor(activeHour / 24) === 0
+                  ? data.forecast.forecastday[0].hour[new Date().getHours()]
+                      .condition.icon
+                  : data.forecast.forecastday[Math.floor(activeHour / 24)].day
+                      .condition.icon
+              }
+              alt="condition"
+            />
           </div>
           <div className="today--temperature">
-            {isCelcius
-              ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                  activeHour % 24
-                ].temp_c
-              : data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
-                  activeHour % 24
-                ].temp_f}
+            {
+              // if active hour is 0, which can happen only after clicking on the day icon
+              // show current hour data for the current day and average data for the forecast
+              // if not show data for the active hour with added differentiation between C and F
+              activeHour % 24 !== 0
+                ? isCelcius
+                  ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
+                      activeHour % 24
+                    ].temp_c
+                  : data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
+                      activeHour % 24
+                    ].temp_f
+                : Math.floor(activeHour / 24) === 0
+                ? isCelcius
+                  ? data.forecast.forecastday[0].hour[new Date().getHours()]
+                      .temp_c
+                  : data.forecast.forecastday[0].hour[new Date().getHours()]
+                      .temp_f
+                : isCelcius
+                ? data.forecast.forecastday[Math.floor(activeHour / 24)].day
+                    .maxtemp_c
+                : data.forecast.forecastday[Math.floor(activeHour / 24)].day
+                    .maxtemp_f
+            }
           </div>
           <button
             className="today__CeFaSwitch"

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Prompt:wght@300;500&display=swap");
 
 :root {
+  --sz-max-width: 734px;
   --clr-main-bg: #232323;
   --clr-main-font: #bfbfbf;
   --clr-font-highlight: white;

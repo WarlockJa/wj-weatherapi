@@ -1,7 +1,7 @@
 @use "../media.scss";
 
 .weatherCard {
-  max-width: 734px;
+  max-width: var(--sz-max-width);
   margin: 0 auto;
 
   .weatherCard__graphSelector {

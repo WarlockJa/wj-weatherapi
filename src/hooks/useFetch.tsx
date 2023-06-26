@@ -24,7 +24,7 @@ export default function useFetch(url: string) {
       !weatherapiLocalData.timestamp ||
       !weatherapiLocalData.url ||
       weatherapiLocalData.url !== url ||
-      weatherapiLocalData.timestamp + 6 * 60 * 1000 < Date.now()
+      weatherapiLocalData.timestamp + 60 * 1000 < Date.now()
     ) {
       console.log("fetching new weather data");
       fetch(url, {

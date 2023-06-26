@@ -42,7 +42,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
   // switching between C and imperial units
   const [isCelcius, setIsCelcius] = useState(true);
   // active hour do display data
-  const [activeHour, setActiveHour] = useState(0);
+  const [activeHour, setActiveHour] = useState(new Date().getHours());
   // graph translateX value based on day card clicked
   const [translateGraph, setTranslateGraph] = useState(new Date().getHours());
   // graph data
