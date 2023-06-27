@@ -4,6 +4,7 @@ import getGraphData from "../utils/getGraphData";
 import GraphSVG from "./GraphSVG";
 import WeatherCardHeader from "./WeatherCardHeader";
 import WeatherCardFooter from "./WeatherCardFooter";
+import { format } from "date-fns";
 
 export interface IGraphData {
   result: { time: string; value: number[] }[];
@@ -79,6 +80,24 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
 
   return (
     <div className="weatherCard">
+      <div className="weatherCard__header__location">
+        <div>results for&nbsp;</div>
+        <h1 className="location--header">
+          {data.location.country}/
+          {data.location.region ? data.location.region.concat("/") : ""}
+          {data.location.name}
+        </h1>
+        <div>
+          &nbsp;
+          {format(
+            new Date(
+              data.forecast.forecastday[Math.floor(activeHour / 24)].date
+            ),
+            "MMMM do"
+          )}
+        </div>
+      </div>
+
       <WeatherCardHeader
         activeHour={activeHour}
         isCelcius={isCelcius}

@@ -4,6 +4,14 @@
   max-width: var(--sz-max-width);
   margin: 0 auto;
 
+  .weatherCard__header__location {
+    display: flex;
+    align-items: baseline;
+    .location--header {
+      font-size: 1.1rem;
+    }
+  }
+
   .weatherCard__graphSelector {
     display: flex;
     margin: 0.5em 0;

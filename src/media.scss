@@ -1,6 +1,6 @@
 // media mixins
 $breakpoint-small: 500px;
-$breakpoint-medium: 699px;
+$breakpoint-medium: 698px;
 
 @mixin max-width($breakpoint) {
   @if ($breakpoint == small) {
