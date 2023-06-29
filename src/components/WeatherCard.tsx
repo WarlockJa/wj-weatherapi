@@ -5,6 +5,8 @@ import GraphSVG from "./GraphSVG";
 import WeatherCardHeader from "./WeatherCardHeader";
 import WeatherCardFooter from "./WeatherCardFooter";
 import { format } from "date-fns";
+import { enUS, ru } from "date-fns/locale";
+import { useTranslation } from "react-i18next";
 
 export interface IGraphData {
   result: { time: string; value: number[] }[];
@@ -32,14 +34,15 @@ const getGraphDataField = (value: number, isCelcius: boolean) => {
 };
 
 const graphSelectorButtons = [
-  "Temperature",
-  "Precipitation",
-  "Humidity",
-  "UV",
-  "Wind",
+  "graphSelector_temperature",
+  "graphSelector_precipitation",
+  "graphSelector_humidity",
+  "graphSelector_uv",
+  "graphSelector_wind",
 ];
 
 const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
+  const { t, i18n } = useTranslation();
   // switching between C and imperial units
   const [isCelcius, setIsCelcius] = useState(true);
   // active hour do display data
@@ -73,7 +76,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
         }
         onClick={() => setGraphType(index)}
       >
-        {item}
+        {t(item)}
       </button>
     </React.Fragment>
   ));
@@ -81,7 +84,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
   return (
     <div className="weatherCard">
       <div className="weatherCard__header__location">
-        <div>results for&nbsp;</div>
+        <div>{t("head_resultsFor")}&nbsp;</div>
         <h1 className="location--header">
           {data.location.country}/
           {data.location.region ? data.location.region.concat("/") : ""}
@@ -93,7 +96,8 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
             new Date(
               data.forecast.forecastday[Math.floor(activeHour / 24)].date
             ),
-            "MMMM do"
+            "MMMM do",
+            { locale: i18n.language === "ru" ? ru : enUS }
           )}
         </div>
       </div>

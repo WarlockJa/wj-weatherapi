@@ -3,6 +3,8 @@ import "./graphsvg.scss";
 import { format } from "date-fns";
 import getLineSegmentPercent from "../utils/getLineSegmentPercent";
 import { IGraphData } from "./WeatherCard";
+import { useTranslation } from "react-i18next";
+import { enUS, ru } from "date-fns/locale";
 
 interface IGraphSVGData extends IGraphData {
   isCelcius: boolean;
@@ -18,6 +20,7 @@ const GRAPH_HEIGHT = 100; // height of the graph svg in px
 const UNDER_GRAPH_OFFSET = 20; // additional space for the labels under the graph
 
 const GraphSVG = (graphData: IGraphSVGData) => {
+  const { t, i18n } = useTranslation();
   // graph width in px
   const graphWidth = (graphData.result.length - 1) * STEP;
   // generating points data for svg graph
@@ -40,8 +43,10 @@ const GraphSVG = (graphData: IGraphSVGData) => {
   // aria-labels for graph temperature numbers
   const graphLabels = graphData.result.map((hour, index) => {
     const ariaLabel = `${hour.value}°${
-      graphData.isCelcius ? "Celcius" : "Farenheit"
-    } ${format(new Date(hour.time), "eeee do kk:00")}`;
+      graphData.isCelcius ? t("celcius") : t("farenheit")
+    } ${format(new Date(hour.time), "eeee do kk:00", {
+      locale: i18n.language === "ru" ? ru : enUS,
+    })}`;
 
     // generating svg elements for a middle hour of the BLOCK_SIZE
     // (e.g. BLOCK_SIZE = 5 generating for every 3rd hour)
@@ -68,8 +73,8 @@ const GraphSVG = (graphData: IGraphSVGData) => {
           >
             {graphData.graphType === 4
               ? graphData.isCelcius
-                ? `${Math.floor(hour.value[0])} km/h`
-                : `${Math.floor(hour.value[0])} mph`
+                ? `${Math.floor(hour.value[0])} ${t("km/h")}`
+                : `${Math.floor(hour.value[0])} ${t("mph")}`
               : Math.floor(hour.value[0])}
           </text>
 

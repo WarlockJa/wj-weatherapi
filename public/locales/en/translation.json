@@ -1,0 +1,19 @@
+{
+  "graphSelector_temperature": "Temperature",
+  "graphSelector_precipitation": "Precipitation",
+  "graphSelector_humidity": "Humidity",
+  "graphSelector_uv": "UV",
+  "graphSelector_wind": "Wind",
+
+  "head_resultsFor": "results for",
+
+  "header_precipitation": "Precipitation",
+  "header_humidity": "Humidity",
+  "header_wind": "Wind",
+  "header_weather": "Weather",
+
+  "km/h": "km/h",
+  "mph": "mph",
+  "celcius": "Celcius",
+  "farenheit": "Farenheit"
+}

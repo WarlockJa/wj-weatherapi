@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 import "./weathercardfooter.scss";
+import { useTranslation } from "react-i18next";
+import { enUS, ru } from "date-fns/locale";
 
 interface IWeatherCardFooterProps {
   data: IWeatherAPI_Data;
@@ -16,6 +18,7 @@ const WeatherCardFooter = ({
   setTranslateGraph,
   isCelcius,
 }: IWeatherCardFooterProps) => {
+  const { i18n } = useTranslation();
   const weatherCard__forecastDays = data.forecast.forecastday.map(
     (day, index) => (
       <button
@@ -30,7 +33,11 @@ const WeatherCardFooter = ({
             : "weatherCard__footer__item"
         }
       >
-        <p className="item--dotw">{format(new Date(day.date), "eee")}</p>
+        <p className="item--dotw">
+          {format(new Date(day.date), "eee", {
+            locale: i18n.language === "ru" ? ru : enUS,
+          })}
+        </p>
         <img
           src={
             index === 0

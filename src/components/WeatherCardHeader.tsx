@@ -1,5 +1,7 @@
 import { format } from "date-fns";
 import "./weathercardheader.scss";
+import { useTranslation } from "react-i18next";
+import { enUS, ru } from "date-fns/locale";
 
 interface IWeatherCardHeaderProps {
   data: IWeatherAPI_Data;
@@ -14,6 +16,7 @@ const WeatherCardHeader = ({
   activeHour,
   setIsCelcius,
 }: IWeatherCardHeaderProps) => {
+  const { t, i18n } = useTranslation();
   return (
     <div className="weatherCard__header">
       <div className="weatherCard__header__today">
@@ -78,7 +81,7 @@ const WeatherCardHeader = ({
         </div>
         <div className="today__additionalInfoWrapper">
           <p>
-            Precipitation:{" "}
+            {t("header_precipitation")}:{" "}
             {isCelcius
               ? data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
                   activeHour % 24
@@ -89,7 +92,7 @@ const WeatherCardHeader = ({
             %
           </p>
           <p>
-            Humidity:{" "}
+            {t("header_humidity")}:{" "}
             {
               data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
                 activeHour % 24
@@ -98,29 +101,32 @@ const WeatherCardHeader = ({
             %
           </p>
           <p>
-            Wind:{" "}
+            {t("header_wind")}:{" "}
             {isCelcius
               ? `${
                   data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
                     activeHour % 24
                   ].wind_kph
-                } km/h`
+                } ${t("km/h")}`
               : `${
                   data.forecast.forecastday[Math.floor(activeHour / 24)].hour[
                     activeHour % 24
                   ].wind_mph
-                } mph`}
+                } ${t("mph")}`}
           </p>
         </div>
       </div>
       <div className="weatherCard__header__date">
-        <h1 className="weatherCard__header__date--header">Weather</h1>
+        <h1 className="weatherCard__header__date--header">
+          {t("header_weather")}
+        </h1>
         <p>
           {format(
             new Date(
               data.forecast.forecastday[Math.floor(activeHour / 24)].date
             ),
-            "eeee"
+            "eeee",
+            { locale: i18n.language === "ru" ? ru : enUS }
           )}
         </p>
         <p>

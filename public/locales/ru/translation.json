@@ -1,0 +1,19 @@
+{
+  "graphSelector_temperature": "Температура",
+  "graphSelector_precipitation": "Осадки",
+  "graphSelector_humidity": "Влажность",
+  "graphSelector_uv": "Ультрафиолет",
+  "graphSelector_wind": "Ветер",
+
+  "head_resultsFor": "прогноз для",
+
+  "header_precipitation": "Осадки",
+  "header_humidity": "Влажность",
+  "header_wind": "Ветер",
+  "header_weather": "Погода",
+
+  "km/h": "км/ч",
+  "mph": "м/ч",
+  "celcius": "Цельсий",
+  "farenheit": "Фаренгейт"
+}
