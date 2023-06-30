@@ -37,6 +37,20 @@ body {
   font-family: "Prompt", sans-serif;
 }
 
+.dark {
+  --clr-main-bg: #232323;
+  --clr-main-font: #bfbfbf;
+  --clr-font-highlight: white;
+  --clr-dayCard-bg: #bfbfbf20;
+}
+
+.light {
+  --clr-main-bg: #fff;
+  --clr-main-font: #5e5e5e;
+  --clr-dayCard-bg: #23232320;
+  --clr-font-highlight: black;
+}
+
 h1,
 p {
   margin: 0;
