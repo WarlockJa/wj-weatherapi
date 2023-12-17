@@ -14,7 +14,7 @@ interface IGraphSVGData extends IGraphData {
   graphType: number;
 }
 
-const STEP = 38; // space taken by an hour data on teh graph in px
+const STEP = 38; // space taken by an hour data on the graph in px
 const BLOCK_SIZE = 3; // number of hours in a merged display block (for better results should be odd)
 const GRAPH_HEIGHT = 100; // height of the graph svg in px
 const UNDER_GRAPH_OFFSET = 20; // additional space for the labels under the graph
@@ -23,9 +23,15 @@ const GraphSVG = (graphData: IGraphSVGData) => {
   const { t, i18n } = useTranslation();
   // graph width in px
   const graphWidth = (graphData.result.length - 1) * STEP;
-  // generating points data for svg graph
+
   const baseGraphValue =
-    graphData.max < 0 ? 0 : graphData.min >= 0 ? GRAPH_HEIGHT : 50;
+    graphData.max < 0
+      ? 0
+      : graphData.min >= 0
+      ? GRAPH_HEIGHT
+      : getLineSegmentPercent({ x: 0, max: graphData.max, min: graphData.min });
+
+  // generating points data for svg graph
   const points = graphData.result
     .reduce(
       (result: string, item, index) =>
@@ -153,9 +159,9 @@ const GraphSVG = (graphData: IGraphSVGData) => {
                 ? "polyline--wind"
                 : baseGraphValue === 0
                 ? "polyline--cold"
-                : baseGraphValue === 50
-                ? "polyline--mixed"
-                : "polyline--warm"
+                : baseGraphValue === 100
+                ? "polyline--warm"
+                : "polyline--mixed"
             }
             strokeWidth="2"
             points={points}
