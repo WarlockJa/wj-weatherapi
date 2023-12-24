@@ -1,7 +1,7 @@
 import React from "react";
 import "./graphsvg.scss";
 import { format } from "date-fns";
-import getLineSegmentPercent from "../utils/getLineSegmentPercent";
+import getLineSegmentPercent from "@utils/getLineSegmentPercent";
 import { IGraphData } from "./WeatherCard";
 import { useTranslation } from "react-i18next";
 import { enUS, ru } from "date-fns/locale";

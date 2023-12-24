@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./weathercard.scss";
-import getGraphData from "../utils/getGraphData";
+import getGraphData from "@utils/getGraphData";
 import GraphSVG from "./GraphSVG";
 import WeatherCardHeader from "./WeatherCardHeader";
 import WeatherCardFooter from "./WeatherCardFooter";
