@@ -53,7 +53,8 @@ export default function useGetLocalData({ url, lang }: IGetLocalStorageProps) {
     // local data is more than 1 hour old
     if (weatherapiLocalData.timestamp + 60 * 60 * 1000 < Date.now()) return;
     // geolocation data is fetched from the hook but not present in stored data
-    // or stored geolocation data is different from newly fetched
+    if (geo && !weatherapiLocalData.geolocation) return;
+    // stored geolocation data is different from newly fetched
     if (
       geo &&
       weatherapiLocalData.geolocation &&
