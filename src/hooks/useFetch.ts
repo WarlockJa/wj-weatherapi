@@ -5,6 +5,9 @@ import { useLocalData } from "@/context/LocalDataProvider";
 export default function useFetch({ url, lang }: IFetchProps) {
   const [data, setData] = useState<IWeatherAPI_Data | undefined | null>();
   const [error, setError] = useState(null);
+  // flag to cancel fetch by IP if geolocation request is in progress
+  // necessary because geolocation data may be delayed
+  const [cancelFetch, setCancelFetch] = useState<boolean>(false);
   const geo = useGeolocation();
   const localData = useLocalData();
 
@@ -16,9 +19,6 @@ export default function useFetch({ url, lang }: IFetchProps) {
       return;
     }
 
-    // flag to cancel fetch by IP if geolocation request is in progress
-    // necessary because geolocation data may be delayed
-    let cancelFetch = false;
     if (!geo) {
       // no geolocation data, fetching weather by the IP
       console.log("fetching IP weather data");
@@ -47,7 +47,7 @@ export default function useFetch({ url, lang }: IFetchProps) {
     } else {
       console.log("fetching geolocation weather data");
       // raising flag to cancel possible weather data by IP request
-      cancelFetch = true;
+      setCancelFetch(true);
       fetch(
         `${url}forecast.json?q=${geo.latitude.toString()},${geo.longitude.toString()}&days=3&lang=${lang}`,
         {
