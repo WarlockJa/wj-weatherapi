@@ -86,8 +86,8 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
       <div className="weatherCard__header__location">
         <div>{t("head_resultsFor")}&nbsp;</div>
         <h1 className="location--header">
-          {data.location.country}/
-          {data.location.region ? data.location.region.concat("/") : ""}
+          {/* {data.location.country}/
+          {data.location.region ? data.location.region.concat("/") : ""} */}
           {data.location.name}
         </h1>
         <div>
