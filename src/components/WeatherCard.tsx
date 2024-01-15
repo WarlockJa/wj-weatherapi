@@ -61,7 +61,7 @@ const WeatherCard = ({ data }: { data: IWeatherAPI_Data }) => {
         value: getGraphDataField(graphType, isCelcius),
       })
     );
-  }, [graphType, isCelcius, data]);
+  }, [graphType, isCelcius, data.location.name]);
 
   const graphSelectorContent = graphSelectorButtons.map((item, index) => (
     <React.Fragment key={item}>
